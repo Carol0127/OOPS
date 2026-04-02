@@ -1,0 +1,11 @@
+@theme {
+  /* 定義你的顏色 */
+  --color-brand: #3b82f6;
+  --color-accent: #f59e0b;
+
+  /* 定義你的字體 */
+  --font-display: "Oswald", sans-serif;
+
+  /* 定義你的間距 */
+  --spacing-128: 32rem;
+}
