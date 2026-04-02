@@ -1,0 +1,62 @@
+@theme {
+  --font-sans: "Montserrat", "Noto Sans TC", sans-serif;
+}
+
+@theme {
+  /* Primary - 橙紅色系 */
+  --color-primary-100: #ffe4d4;
+  --color-primary-200: #ffc7a9;
+  --color-primary-300: #ffa57a;
+  --color-primary-400: #ff7a3d;
+  --color-primary-500: #ff4d00;
+  --color-primary-600: #e64500;
+  --color-primary-700: #cc3d00;
+  --color-primary-800: #992e00;
+  --color-primary-900: #661f00;
+
+  /* Secondary - 青色系 */
+  --color-secondary-100: #e6fef9;
+  --color-secondary-300: #9dfae6;
+  --color-secondary-500: #0af3d0;
+  --color-secondary-700: #08c2a6;
+  --color-secondary-900: #046153;
+
+  /* Neutral - 灰色系 */
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #141414;
+
+  /* Accents / Error - 粉紫紅系 */
+  --color-accent-100: #fff0f7;
+  --color-accent-300: #ffb5d7;
+  --color-accent-500: #fc499f;
+  --color-accent-700: #d63683;
+  --color-accent-900: #661a3e;
+
+  /* Semantic - 語意色 */
+  --color-info-100: #e6fef9;
+  --color-info-300: #9dfae6;
+  --color-info-500: #0af3d0;
+  --color-info-700: #08c2a6;
+
+  --color-error-100: #fff0f7;
+  --color-error-300: #ffb5d7;
+  --color-error-500: #fc499f;
+  --color-error-700: #d63683;
+
+  --color-success-100: #f6ffc9;
+  --color-success-300: #ebff85;
+  --color-success-500: #d4ff00;
+  --color-success-700: #a6c800;
+
+  --color-warning-100: #fff9e5;
+  --color-warning-300: #ffeba4;
+  --color-warning-500: #ffd53d;
+  --color-warning-700: #efc42b;
+}

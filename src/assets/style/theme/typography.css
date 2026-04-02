@@ -1,0 +1,107 @@
+@theme {
+  --font-sans: "Montserrat", "Noto Sans TC", sans-serif;
+}
+
+@layer utilities {
+  /* --- Display Series (僅英文 En only) --- */
+  .text-display-01 {
+    font-size: clamp(40px, 8vw, 72px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-family: "Montserrat", sans-serif;
+  }
+  .text-display-02 {
+    font-size: clamp(36px, 7vw, 64px);
+    font-weight: 800;
+    line-height: 1.15;
+    letter-spacing: -0.03em;
+    font-family: "Montserrat", sans-serif;
+  }
+  .text-display-03 {
+    font-size: clamp(32px, 6vw, 56px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-family: "Montserrat", sans-serif;
+  }
+  .text-display-04 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 700;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    font-family: "Montserrat", sans-serif;
+  }
+
+  /* --- Heading Series (中英文混合 Cn/En) --- */
+  .text-heading-01 {
+    font-size: clamp(36px, 4vw, 40px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+  .text-heading-02 {
+    font-size: clamp(24px, 3.5vw, 32px);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+  }
+  .text-heading-03 {
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+  }
+  .text-heading-04 {
+    font-size: clamp(18px, 2.5vw, 24px);
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.02em;
+  }
+  .text-heading-05 {
+    font-size: clamp(16px, 2vw, 20px);
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0;
+  }
+  .text-heading-06 {
+    font-size: clamp(14px, 1.5vw, 16px);
+    font-weight: 500;
+    line-height: 1.45;
+    letter-spacing: 0;
+  }
+
+  /* --- Body Series (僅中文 Cn only) --- */
+
+  .text-body-l {
+    font-size: clamp(16px, 1.8vw, 18px);
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+  .text-body-m {
+    font-size: clamp(14px, 1.5vw, 16px);
+    font-weight: 400;
+    line-height: 1.6;
+    letter-spacing: 0;
+  }
+  .text-body-s {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.5;
+    letter-spacing: 0;
+  }
+
+  /* --- Label --- */
+
+  .text-label-b {
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .text-label-r {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.2;
+  }
+}

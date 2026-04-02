@@ -1,0 +1,38 @@
+@layer base {
+  body {
+    color: var(--color-neutral-700);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-heading); /* 預設套用 Montserrat + Noto */
+    font-weight: 700;
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img,
+  video,
+  canvas,
+  svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+@theme {
+  /* 定義 spacing 變數 */
+  /* 120px / 16px = 7.5rem */
+  --spacing-30: 7.5rem;
+}
