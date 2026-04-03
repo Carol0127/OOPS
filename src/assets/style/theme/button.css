@@ -8,7 +8,6 @@
     font-weight: 700;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
-    border: 2px solid transparent;
     white-space: nowrap;
   }
 
@@ -133,7 +132,7 @@
   .btn-bullet {
     @apply bg-primary-500 text-primary-100;
     &:hover {
-      @apply bg-primary-600;
+      @apply bg-primary-600  text-primary-100;
     }
     &:active {
       @apply bg-primary-700;
