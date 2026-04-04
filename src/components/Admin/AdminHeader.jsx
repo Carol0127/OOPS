@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
-import { auth } from "../../firebase";
+import { adminLogoutService } from "../../services/admin";
 
 function AdminHeader() {
   const navLinks = [
@@ -15,13 +14,11 @@ function AdminHeader() {
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    if (!window.confirm("確定要登出系統嗎？")) return; // 加入二次確認更貼心
     try {
-      await signOut(auth);
-      localStorage.removeItem("oops_admin_email");
+      await adminLogoutService();
       navigate("/adminLogin");
     } catch (error) {
-      console.error("登出失敗：", error);
+      console.error("登出發生錯誤:", error);
     }
   };
 

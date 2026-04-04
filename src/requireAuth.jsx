@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
+import { subscribeToAuthChanges } from "./services/admin";
 
 function RequireAuth({ children }) {
   const [user, setUser] = useState(null);
@@ -11,7 +10,7 @@ function RequireAuth({ children }) {
     const startTime = Date.now();
     const minimumDelay = 800;
 
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = subscribeToAuthChanges((currentUser) => {
       const timePassed = Date.now() - startTime;
 
       if (timePassed < minimumDelay) {

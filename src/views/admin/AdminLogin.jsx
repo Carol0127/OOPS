@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { onAuthStateChanged, setPersistence, browserLocalPersistence, signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase";
+
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { adminLoginService, subscribeToAuthChanges } from "../../services/admin";
 
 function AdminLogin() {
   const navigate = useNavigate();
@@ -14,9 +14,9 @@ function AdminLogin() {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  // 自動檢查登入狀態 (記住我功能)
+  //  自動檢查登入狀態
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    const unsubscribe = subscribeToAuthChanges((user) => {
       if (user) {
         navigate("/admin");
       }
@@ -27,9 +27,7 @@ function AdminLogin() {
   const onSubmit = async (data) => {
     setFirebaseError("");
     try {
-      // 登入前設定持久化
-      await setPersistence(auth, browserLocalPersistence);
-      await signInWithEmailAndPassword(auth, data.email, data.password);
+      await adminLoginService(data.email, data.password);
       alert("歡迎回來 OOPS 後台！");
       navigate("/admin");
     } catch (error) {
