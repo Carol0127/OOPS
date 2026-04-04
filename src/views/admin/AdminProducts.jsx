@@ -29,16 +29,16 @@ function AdminProducts() {
     }
   };
 
-  const colClass = "flex-1 px-2";
+  const colClass = "flex-1";
 
   return (
     <>
       <section className="bg-neutral-200 min-h-screen pb-20">
-        <div className="max-w-324 w-full mx-auto py-16 px-8">
+        <div className="max-w-324 w-full mx-auto py-8 px-4 lg:py-16 lg:px-8">
           <div className="flex justify-between items-center mb-10">
             <h1 className="text-primary-500 text-heading-02 ">產品管理</h1>
             <button
-              className="btn btn-lg btn-primary "
+              className="btn btn-md lg:btn-lg btn-primary "
               onClick={() => navigate("/admin/products/new")}
             >
               新增商品
@@ -47,7 +47,7 @@ function AdminProducts() {
 
           <div className="bg-white rounded-xl overflow-hidden border border-neutral-300">
             {/* 表頭 */}
-            <div className="hidden md:flex bg-neutral-500 text-white py-4 px-6  text-center items-center">
+            <div className="hidden md:flex bg-neutral-500 text-white py-4    items-center text-heading-05 text-center">
               <div className={colClass}>分類</div>
               <div className={colClass}>中文名稱</div>
               <div className={colClass}>英文名稱</div>
@@ -66,11 +66,11 @@ function AdminProducts() {
                 products.map((item) => (
                   <div
                     key={item.id}
-                    className="flex flex-col md:flex-row items-center text-center py-6 md:py-5 px-6 border-b border-neutral-200 hover:bg-neutral-50 transition-colors gap-y-3 md:gap-y-0"
+                    className="flex flex-col md:flex-row items-center text-center py-4  border-b border-neutral-200 hover:bg-neutral-50 transition-colors "
                   >
                     <div className={`${colClass} text-heading-06 text-neutral-700`}>{item.category}</div>
                     <div className={`${colClass} text-heading-06  md:font-normal text-neutral-800`}>{item.zhName}</div>
-                    <div className={`${colClass} text-neutral-700 `}>{item.enName}</div>
+                    <div className={`${colClass} text-heading-06 text-neutral-700 `}>{item.enName}</div>
                     <div className={`${colClass} text-heading-06 text-neutral-700`}>{item.productId}</div>
                     <div
                       className={`${colClass} text-heading-06 ${item.status ? "text-primary-500" : "text-neutral-400"} `}

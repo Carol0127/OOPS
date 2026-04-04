@@ -1,0 +1,26 @@
+@layer components {
+  /* 封裝 Label 樣式 */
+  .admin-label {
+    @apply block text-neutral-700  font-medium mb-1 cursor-pointer;
+  }
+
+  /* 封裝 Input 樣式 */
+  .admin-input {
+    @apply w-full ext-neutral-500 outline-none p-2 border-b border-neutral-300 bg-transparent  transition-colors focus:border-primary-500;
+  }
+
+  /* 封裝錯誤狀態 */
+  .admin-input-error {
+    @apply border-red-500 focus:border-red-500;
+  }
+
+  /* 封裝錯誤訊息文字 */
+  .admin-error-msg {
+    @apply text-red-500 text-xs mt-1 font-medium;
+  }
+
+  /* 必填星號 */
+  .required-star {
+    @apply text-red-500 ml-0.5;
+  }
+}

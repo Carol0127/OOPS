@@ -11,6 +11,7 @@ import AdminLogin from "./views/admin/AdminLogin";
 import AdminCategory from "./views/admin/AdminCategory";
 import AdminProducts from "./views/admin/AdminProducts";
 import AdminProductForm from "./views/admin/AdminProductForm";
+import AdminCategoryForm from "./views/admin/AdminCategoryForm";
 
 const router = createHashRouter([
   {
@@ -37,7 +38,17 @@ const router = createHashRouter([
       { index: true, element: <AdminProducts /> },
       {
         path: "category",
-        element: <AdminCategory />,
+        children: [
+          { index: true, element: <AdminCategory /> },
+          {
+            path: "new",
+            element: <AdminCategoryForm mode="new" />,
+          },
+          {
+            path: "edit/:id",
+            element: <AdminCategoryForm mode="edit" />,
+          },
+        ],
       },
       {
         path: "products",

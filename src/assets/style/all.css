@@ -6,3 +6,5 @@
 @import "./theme/base.css";
 
 @import "./theme/button.css";
+
+@import "./components/admin/form.css";

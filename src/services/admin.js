@@ -129,3 +129,27 @@ export const subscribeToCategories = (callback) => {
     callback(categories);
   });
 };
+
+// 新增分類
+export const addCategoryService = async (data) => {
+  return await addDoc(collection(db, "categories"), {
+    ...data,
+    createdAt: serverTimestamp(),
+  });
+};
+
+// 更新分類
+export const updateCategoryService = async (id, data) => {
+  const categoryRef = doc(db, "categories", id);
+  return await updateDoc(categoryRef, {
+    ...data,
+    updatedAt: serverTimestamp(),
+  });
+};
+
+// 取得單一分類 (編輯模式用)
+export const getCategoryService = async (id) => {
+  const docRef = doc(db, "categories", id);
+  const docSnap = await getDoc(docRef);
+  return docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null;
+};
