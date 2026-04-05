@@ -12,6 +12,9 @@ import AdminCategory from "./views/admin/AdminCategory";
 import AdminProducts from "./views/admin/AdminProducts";
 import AdminProductForm from "./views/admin/AdminProductForm";
 import AdminCategoryForm from "./views/admin/AdminCategoryForm";
+import AdminActivity from "./views/admin/AdminActivity";
+import AdminActivityForm from "./views/admin/AdminActivityForm";
+import AdminContactForm from "./views/admin/AdminContactForm";
 
 const router = createHashRouter([
   {
@@ -64,6 +67,21 @@ const router = createHashRouter([
           },
         ],
       },
+      {
+        path: "activity",
+        children: [
+          { index: true, element: <AdminActivity /> },
+          {
+            path: "new",
+            element: <AdminActivityForm mode="new" />,
+          },
+          {
+            path: "edit/:id",
+            element: <AdminActivityForm mode="edit" />,
+          },
+        ],
+      },
+      { path: "contact", element: <AdminContactForm /> },
     ],
   },
 ]);

@@ -6,7 +6,7 @@
 
   /* 封裝 Input 樣式 */
   .admin-input {
-    @apply w-full ext-neutral-500 outline-none p-2 border-b border-neutral-300 bg-transparent  transition-colors focus:border-primary-500;
+    @apply w-full text-neutral-700 outline-none p-2 border-b border-neutral-300 bg-transparent  transition-colors focus:border-primary-500;
   }
 
   /* 封裝錯誤狀態 */

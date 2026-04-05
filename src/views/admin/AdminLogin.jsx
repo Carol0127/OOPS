@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { adminLoginService, subscribeToAuthChanges } from "../../services/admin";
+import toast from "react-hot-toast";
 
 function AdminLogin() {
   const navigate = useNavigate();
@@ -28,13 +29,15 @@ function AdminLogin() {
     setFirebaseError("");
     try {
       await adminLoginService(data.email, data.password);
-      alert("歡迎回來 OOPS 後台！");
+      toast.success("歡迎回來 OOPS 後台！");
       navigate("/admin");
     } catch (error) {
       if (error.code === "auth/invalid-credential") {
         setFirebaseError("帳號或密碼錯誤，請重新確認！");
+        toast.error("帳號或密碼錯誤，請重新確認！");
       } else {
         setFirebaseError("系統發生異常，請稍後再試。");
+        toast.error("系統發生異常，請稍後再試。");
       }
     }
   };

@@ -1,25 +1,36 @@
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { adminLogoutService } from "../../services/admin";
+import toast from "react-hot-toast";
+import { showConfirmToast } from "./toastHelper";
 
 function AdminHeader() {
   const navLinks = [
-    { name: "表單查看", path: "/admin/FormContact", icon: "mail" },
+    { name: "表單查看", path: "/admin/Contact", icon: "mail" },
     { name: "分類管理", path: "/admin/category", icon: "category" },
     { name: "商品管理", path: "/admin/products", icon: "palette" },
-    { name: "限時發售", path: "/admin/sales", icon: "timer" },
+    { name: "限時發售", path: "/admin/activity", icon: "timer" },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogout = async () => {
+  const executeLogout = async () => {
     try {
       await adminLogoutService();
+      toast.success("已成功登出！");
       navigate("/adminLogin");
-    } catch (error) {
-      console.error("登出發生錯誤:", error);
+    } catch {
+      toast.error("登出失敗，請稍後再試。");
     }
+  };
+
+  const handleLogoutClick = () => {
+    showConfirmToast({
+      title: "確定要登出系統嗎？",
+      confirmText: "確定登出",
+      onConfirm: executeLogout,
+    });
   };
 
   return (
@@ -52,7 +63,7 @@ function AdminHeader() {
         <div className="flex-1 flex justify-end">
           <button
             type="button"
-            onClick={handleLogout}
+            onClick={handleLogoutClick}
             className="text-neutral-100 hover:text-primary-500 transition-colors me-2"
           >
             <span className="material-symbols-rounded align-bottom text-3xl">logout</span>
@@ -89,11 +100,11 @@ function AdminHeader() {
             {navLinks.map((link) => (
               <NavLink
                 key={link.name}
-                className="p-4 flex items-center hover:bg-neutral-500 rounded-xl transition-colors"
+                className="p-4 text-center hover:bg-neutral-500 rounded-xl transition-colors"
                 to={link.path}
                 onClick={() => setIsOpen(false)}
               >
-                <span className="material-symbols-rounded me-4">{link.icon}</span>
+                <span className="material-symbols-rounded align-bottom me-4">{link.icon}</span>
                 {link.name}
               </NavLink>
             ))}

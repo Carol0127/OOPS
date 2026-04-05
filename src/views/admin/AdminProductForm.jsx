@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+
 import {
   uploadImageService,
   addProductService,
@@ -88,15 +90,14 @@ function AdminProductForm({ mode }) {
       setIsProcessing(true);
       if (mode === "new") {
         await addProductService(data);
-        alert("產品新增成功！");
+        toast.success("產品新增成功！");
       } else {
         await updateProductService(id, data);
-        alert("產品更新成功！");
+        toast.success("產品更新成功！");
       }
       navigate("/admin/products");
-    } catch (error) {
-      console.error(error);
-      alert("儲存失敗，請檢查權限設定");
+    } catch {
+      toast.error("儲存失敗，請檢查權限設定");
     } finally {
       setIsProcessing(false);
     }
