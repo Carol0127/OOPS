@@ -1,11 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { NavLink } from "react-router-dom";
 import toast from "react-hot-toast";
 import { addContactService } from "../../services/admin";
 import HeroSwiper from "../../components/HeroSwiper";
-import { NavLink } from "react-router-dom";
 import Marquee from "../../components/Marquee";
+import FeaturePhoto from "../../components/FeaturePhoto";
+import { getFrontendActivitiesService } from "../../services/frontend";
+import Countdown from "../../components/Countdown";
 
 function Home() {
+  const [activities, setActivties] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -47,6 +51,19 @@ function Home() {
   const inputClass =
     "w-full bg-[#4A4A4A] text-white rounded-xl py-3 px-4 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all";
 
+  useEffect(() => {
+    const fetchActivities = async () => {
+      try {
+        const data = await getFrontendActivitiesService();
+        setActivties(data);
+      } catch (error) {
+        console.error("抓取活動失敗:", error);
+      }
+    };
+    fetchActivities();
+  }, []);
+
+  console.log(activities);
   return (
     <>
       <section className="w-full lg:p-10 lg:mt-20 lg:mb-5">
@@ -117,7 +134,40 @@ function Home() {
       </section>
       <section className="w-full">
         <Marquee />
-        <div></div>
+        {activities.map((item) => (
+          <div
+            key={item.id}
+            className=" bg-cover bg-center bg-no-repeat  w-full py:20 lg:py-30"
+            style={{ backgroundImage: `url(${item.imgFront})` }}
+          >
+            <div className="max-w-324 mx-auto p-4 ">
+              <div className="grid grid-cols-1 md:grid-cols-12 gap-0 w-full rounded-4xl overflow-hidden">
+                {/* 左側：佔 7 欄 */}
+                <div className="md:col-span-7 lg:h-172.5">
+                  <img
+                    src="https://firebasestorage.googleapis.com/v0/b/gen-lang-client-0048987349.firebasestorage.app/o/products%2F1775394311680-New.webp?alt=media&token=af030a6e-6db5-4141-90d1-bdcf6a6cbac6"
+                    alt=""
+                    className=" w-full h-full object-cover object-left"
+                  />
+                </div>
+
+                {/* 右側：佔 5 欄 */}
+                <div className="md:col-span-5 p-6 lg:p-10 bg-accent-500 justify-between flex flex-col gap-5 lg:gap-0">
+                  <h3 className="text-heading-01 text-primary-900">{item.activity}</h3>
+                  <div>
+                    <h2 className="text-display-01 text-accent-100 mb-1">{item.title}</h2>
+                    <h2 className="text-display-01 text-accent-100 mb-2">{item.subtitle}</h2>
+                    <p className="text-body-m text-accent-100">{item.description}</p>
+                  </div>
+                  <Countdown targetDate={item.endTime} />
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </section>
+      <section className="py-20">
+        <FeaturePhoto />
       </section>
       <section className="bg-[#1E1E1E] py-16 px-4">
         <div className="max-w-3xl mx-auto">
