@@ -6,7 +6,7 @@ function Header() {
 
   return (
     <>
-      <div className="md:mx-10 mx-4 bg-white/75 backdrop-blur-md rounded-full sticky top-5 z-50">
+      <div className="md:mx-10 mx-4 bg-white/75 backdrop-blur-md rounded-full fixed top-5 left-0 right-0 z-50">
         <div className="p-4 lg:p-8 flex">
           <NavLink
             className="me-auto shrink-0"

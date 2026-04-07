@@ -69,7 +69,7 @@
 
   /* (2) Outline - 橘色邊框+文字 */
   .btn-outline {
-    @apply border-primary-500 text-primary-500 bg-primary-100;
+    @apply border-primary-500 border text-primary-500;
 
     &:hover {
       @apply border-primary-300 text-primary-300 bg-primary-100;
