@@ -1,77 +1,107 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-import toast from "react-hot-toast";
-import { addContactService } from "../../services/admin";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+
 import HeroSwiper from "../../components/HeroSwiper";
 import Marquee from "../../components/Marquee";
 import FeaturePhoto from "../../components/FeaturePhoto";
-import { getFrontendActivitiesService } from "../../services/frontend";
-import Countdown from "../../components/Countdown";
+
+import "swiper/css";
+import SerieSwiper from "../../components/SeriesSwiper";
+import ContactForm from "../../components/ContactForm";
+import Activities from "../../components/Activities";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function Home() {
-  const [activities, setActivties] = useState([]);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    title: "",
-    message: "",
-  });
+  const introSection = useRef(null);
+  const activitiesSection = useRef(null);
+  const seriesSection = useRef(null);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
+  // useEffect(() => {
+  //   // 監聽圖片與資源全部載入完成
+  //   const handleLoad = () => {
+  //     ScrollTrigger.refresh();
+  //   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  //   window.addEventListener("load", handleLoad);
 
-    // 簡單驗證
-    if (!formData.name || !formData.email || !formData.message) {
-      toast.error("請填寫必填欄位（姓名、信箱、訊息）");
-      return;
-    }
+  //   // 如果是單頁應用切換，有時候需要手動補一個延遲刷新
+  //   const timer = setTimeout(() => {
+  //     ScrollTrigger.refresh();
+  //   }, 1000);
 
-    setIsSubmitting(true);
-    try {
-      await addContactService(formData);
-      toast.success("訊息已成功送出！");
-      // 清空表單
-      setFormData({ name: "", phone: "", email: "", title: "", message: "" });
-    } catch (error) {
-      console.error(error);
-      toast.error("送出失敗，請稍後再試");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  // 定義 Input 的共通樣式
-  const inputClass =
-    "w-full bg-[#4A4A4A] text-white rounded-xl py-3 px-4 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-primary-500 transition-all";
+  //   return () => {
+  //     window.removeEventListener("load", handleLoad);
+  //     clearTimeout(timer);
+  //   };
+  // }, []);
 
   useEffect(() => {
-    const fetchActivities = async () => {
-      try {
-        const data = await getFrontendActivitiesService();
-        setActivties(data);
-      } catch (error) {
-        console.error("抓取活動失敗:", error);
-      }
-    };
-    fetchActivities();
+    let ctx = gsap.context(() => {
+      // --- A. 品牌介紹區塊 (Intro) 重設計 ---
+      const introTl = gsap.timeline({
+        scrollTrigger: {
+          trigger: introSection.current,
+          start: "top 70%", // 稍微延後觸發，確保使用者看到更多區塊內容
+          toggleActions: "play none none none",
+        },
+      });
+
+      introTl
+        // 1. 標題與內文：改用橫向滑入，感覺更俐落
+        .from(".intro-text > *", {
+          x: -100, // 從左邊 100px 處進來
+          opacity: 0,
+          filter: "blur(10px)", // 增加一點模糊淡入感，更有質感
+          duration: 1,
+          stagger: 0.1, // 縮短間隔，讓文字進場更連貫
+          ease: "expo.out",
+        })
+
+        // 2. 右側卡片：改用「扇形散開」或「縮放疊加」感
+        .from(
+          ".intro-card",
+          {
+            scale: 0.8, // 從縮小狀態變大
+            rotation: (i) => [10, -10, 5][i], // 三張卡片分別有不同的初始旋轉，創造混亂美
+            x: 100, // 從右邊滑入
+            opacity: 0,
+            duration: 1.2,
+            stagger: 0.2, // 卡片進場時間差
+            ease: "back.out(2)", // 增加回彈強度，讓卡片更有「跳出來」的感覺
+          },
+          "-=0.8", // 在文字動畫跑一半時就開始，讓畫面充滿動感
+        );
+      // --- B. 系列產品區塊 (Series) ---
+      gsap.from(seriesSection.current, {
+        y: 80,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: seriesSection.current,
+          start: "top 85%",
+        },
+      });
+    });
+
+    return () => ctx.revert();
   }, []);
 
-  console.log(activities);
   return (
     <>
       <section className="w-full lg:p-10 lg:mt-20 lg:mb-5">
         <HeroSwiper />
       </section>
-      <section className="max-w-324 mx-auto py-20 lg:py-30 px-4">
+      <section
+        ref={introSection}
+        className="max-w-324 mx-auto py-20 lg:py-30 px-4"
+      >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
-          <div className="lg:col-span-5 flex flex-col gap-7 lg:gap-10">
+          <div className="intro-text lg:col-span-5 flex flex-col gap-7 lg:gap-10">
             <h2 className="text-display-02 leading-tight">
               Life is full of <span className="text-primary-500">OOPS</span>,
               <br className="hidden md:block" />
@@ -96,9 +126,9 @@ function Home() {
 
           {/* --- 右側區塊：佔 7 欄 --- */}
           <div className="lg:col-span-7">
-            <div className="flex flex-col gap-6">
+            <div className="flex flex-col gap-15">
               {/* 卡片 01：大寬版 */}
-              <div className="bg-primary-500 rounded-4xl p-8 lg:p-10 flex flex-col shadow-sm hover:shadow-md transition-shadow">
+              <div className="intro-card bg-primary-500 rounded-4xl p-8 lg:p-10 flex flex-col shadow-sm hover:shadow-md transition-shadow rotate-[-5deg]">
                 <span className="text-primary-100 text-display-02 self-end leading-none opacity-80">01</span>
                 <div className="mt-4">
                   <h4 className="text-primary-900 text-heading-03 mb-3">意外即創意 — Embrace the Accident</h4>
@@ -109,9 +139,9 @@ function Home() {
               </div>
 
               {/* 卡片 02 & 03：並排區塊 */}
-              <div className="flex flex-col md:flex-row gap-6">
+              <div className="intro-card flex flex-col md:flex-row gap-6">
                 {/* 卡片 02 */}
-                <div className="bg-secondary-900 p-8 lg:p-10 flex-1 flex flex-col gap-4 rounded-4xl hover:-translate-y-1 transition-transform">
+                <div className=" bg-secondary-900 p-8 lg:p-10 flex-1 flex flex-col gap-4 rounded-4xl hover:-translate-y-1 transition-transform">
                   <h2 className="text-secondary-300 text-display-04 self-end opacity-80">02</h2>
                   <div>
                     <h3 className="text-secondary-500 text-heading-03 mb-2">大膽用色 — Vibe</h3>
@@ -120,7 +150,7 @@ function Home() {
                 </div>
 
                 {/* 卡片 03 */}
-                <div className="bg-accent-500 p-8 lg:p-10 flex-1 flex flex-col gap-4 rounded-4xl hover:-translate-y-1 transition-transform">
+                <div className=" bg-accent-500 p-8 lg:p-10 flex-1 flex flex-col gap-4 rounded-4xl hover:-translate-y-1 transition-transform rotate-[5deg]">
                   <h2 className="text-accent-300 text-display-04 self-end opacity-80">03</h2>
                   <div>
                     <h3 className="text-accent-900 text-heading-03 mb-2">打破規則 — Rule</h3>
@@ -132,111 +162,31 @@ function Home() {
           </div>
         </div>
       </section>
-      <section className="w-full">
+      <section
+        ref={activitiesSection}
+        className="w-full"
+      >
         <Marquee />
-        {activities.map((item) => (
-          <div
-            key={item.id}
-            className=" bg-cover bg-center bg-no-repeat  w-full py:20 lg:py-30"
-            style={{ backgroundImage: `url(${item.imgFront})` }}
-          >
-            <div className="max-w-324 mx-auto p-4 ">
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-0 w-full rounded-4xl overflow-hidden">
-                {/* 左側：佔 7 欄 */}
-                <div className="md:col-span-7 lg:h-172.5">
-                  <img
-                    src="https://firebasestorage.googleapis.com/v0/b/gen-lang-client-0048987349.firebasestorage.app/o/products%2F1775394311680-New.webp?alt=media&token=af030a6e-6db5-4141-90d1-bdcf6a6cbac6"
-                    alt=""
-                    className=" w-full h-full object-cover object-left"
-                  />
-                </div>
-
-                {/* 右側：佔 5 欄 */}
-                <div className="md:col-span-5 p-6 lg:p-10 bg-accent-500 justify-between flex flex-col gap-5 lg:gap-0">
-                  <h3 className="text-heading-01 text-primary-900">{item.activity}</h3>
-                  <div>
-                    <h2 className="text-display-01 text-accent-100 mb-1">{item.title}</h2>
-                    <h2 className="text-display-01 text-accent-100 mb-2">{item.subtitle}</h2>
-                    <p className="text-body-m text-accent-100">{item.description}</p>
-                  </div>
-                  <Countdown targetDate={item.endTime} />
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
+        <Activities spacing="py-30" />
       </section>
-      <section className="py-20">
+      <section
+        ref={seriesSection}
+        className="py-20"
+      >
         <FeaturePhoto />
       </section>
-      <section className="bg-[#1E1E1E] py-16 px-4">
-        <div className="max-w-3xl mx-auto">
-          <h2 className="text-white text-5xl font-bold mb-4 font-sans italic">Drop a Message</h2>
-          <p className="text-white text-lg mb-8">準備好一起製造一點有趣的意外了嗎？</p>
-
-          <form
-            onSubmit={handleSubmit}
-            className="space-y-4"
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <input
-                type="text"
-                name="name"
-                placeholder="請輸入姓名"
-                className={inputClass}
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-              <input
-                type="tel"
-                name="phone"
-                placeholder="請輸入電話"
-                className={inputClass}
-                value={formData.phone}
-                onChange={handleChange}
-              />
-            </div>
-
-            <input
-              type="email"
-              name="email"
-              placeholder="請輸入信箱"
-              className={inputClass}
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-
-            <input
-              type="text"
-              name="title"
-              placeholder="欲諮詢事項"
-              className={inputClass}
-              value={formData.title}
-              onChange={handleChange}
-            />
-
-            <textarea
-              name="message"
-              rows="6"
-              placeholder="告訴我們你大膽的想法..."
-              className={`${inputClass} resize-none`}
-              value={formData.message}
-              onChange={handleChange}
-              required
-            ></textarea>
-
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className={`w-full py-4 rounded-full text-white text-xl font-bold transition-all
-              ${isSubmitting ? "bg-neutral-500 cursor-not-allowed" : "bg-primary-500 hover:bg-primary-600 active:scale-[0.98] shadow-lg"}
-            `}
-            >
-              {isSubmitting ? "傳送中..." : "送出訊息"}
-            </button>
-          </form>
+      <section
+        ref={seriesSection}
+        className="bg-neutral-200 py-20 lg:py-30 ps-4 lg:px-0"
+      >
+        <SerieSwiper />
+      </section>
+      <section
+        className="w-full py-14 lg:py-30"
+        id="contact"
+      >
+        <div className="hero-section py-14 rounded-4xl lg:mx-10 lg:rounded-[100px]">
+          <ContactForm />
         </div>
       </section>
     </>

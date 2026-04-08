@@ -1,0 +1,10 @@
+/* 預設樣式 (手機版與平板)：寬度 85% */
+.seriesSwiper .swiper-slide {
+  transition: all 0.3s ease;
+  opacity: 0.5;
+}
+
+/* 鎖定置中的那張卡片 */
+.seriesSwiper .swiper-slide-active {
+  opacity: 1;
+}

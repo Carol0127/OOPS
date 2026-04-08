@@ -1,0 +1,52 @@
+@layer components {
+  /* 定義一個統一的輸入框樣式 */
+  .contact-input {
+    @apply w-full rounded-xl p-3;
+    @apply bg-neutral-600 text-white border border-transparent;
+    @apply transition-all duration-200;
+
+    &:focus {
+      @apply outline-none ring-2 ring-primary-500/50;
+    }
+
+    &::placeholder {
+      @apply text-neutral-100;
+    }
+
+    &.is-invalid {
+      @apply ring-2 ring-red-500 bg-red-500/10;
+      &::placeholder {
+        @apply text-red-300/50;
+      }
+    }
+  }
+
+  .error-msg {
+    @apply text-red-500 text-sm mt-1.5 ml-1 flex items-center gap-1;
+    animation: slideDown 0.2s ease-out;
+  }
+}
+
+.hero-section {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  background-image:
+    linear-gradient(rgba(229, 229, 229, 0.8), rgba(229, 229, 229, 0.8)),
+    url("https://firebasestorage.googleapis.com/v0/b/gen-lang-client-0048987349.firebasestorage.app/o/products%2F1775404265673-N-15-%E5%81%B4%E9%9D%A2.webp?alt=media&token=aa37b268-a165-45ff-96bc-aa7fe09142f3");
+
+  background-position: top;
+  background-repeat: repeat;
+  background-size: 470px;
+  z-index: -1;
+}

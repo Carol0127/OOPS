@@ -8,3 +8,5 @@
 @import "./theme/button.css";
 
 @import "./components/admin/form.css";
+@import "./components/seriesSwiper.css";
+@import "./views/Home.css";

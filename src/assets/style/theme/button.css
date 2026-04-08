@@ -1,5 +1,5 @@
 @layer components {
-  /* ---  Base Button (所有按鈕共用的核心樣式) --- */
+  /* --- 1. 基礎核心 --- */
   .btn {
     display: inline-flex;
     align-items: center;
@@ -9,6 +9,12 @@
     transition: all 0.2s ease-in-out;
     cursor: pointer;
     white-space: nowrap;
+    line-height: 1;
+
+    /* 引用變數 */
+    font-size: var(--btn-fs);
+    padding: var(--btn-py) var(--btn-px);
+    min-width: var(--btn-mw);
   }
 
   .btn-bullet,
@@ -16,44 +22,30 @@
     border-radius: 999px;
   }
 
-  /* 基礎狀態處理 */
-  .btn:focus-visible {
-    outline: 2px solid var(--color-primary-500);
-    outline-offset: 2px;
-  }
-
-  .btn:disabled {
-    cursor: not-allowed;
-    pointer-events: none;
-  }
-
-  /* ---  Button Sizes (L, M, S) --- */
-
-  .btn-lg {
-    font-size: clamp(16px, 1.8vw, 18px);
-    font-weight: 700;
-    line-height: 1;
-    padding: 20px 32px;
-    min-width: 120px;
+  /* --- 2. 尺寸數據接口 (手機版預設值) --- */
+  .btn-sm {
+    --btn-fs: 14px;
+    --btn-py: 8px;
+    --btn-px: 16px;
+    --btn-mw: 64px;
   }
 
   .btn-md {
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 1;
-    padding: 16px 24px;
-    min-width: 80px;
+    --btn-fs: 16px;
+    --btn-py: 16px;
+    --btn-px: 24px;
+    --btn-mw: 80px;
   }
 
-  .btn-sm {
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1;
-    padding: 8px 16px;
-    min-width: 64px;
+  .btn-lg {
+    --btn-fs: clamp(16px, 1.8vw, 18px);
+    --btn-py: 20px;
+    --btn-px: 32px;
+    --btn-mw: 120px;
   }
 
-  /* (1) Primary - 實心橘 */
+  /* --- 3. 顏色風格 (移到這裡，全螢幕尺寸通用) --- */
+
   .btn-primary {
     @apply bg-primary-500 text-primary-100;
     &:hover {
@@ -67,18 +59,14 @@
     }
   }
 
-  /* (2) Outline - 橘色邊框+文字 */
   .btn-outline {
-    @apply border-primary-500 border text-primary-500;
-
+    @apply border border-primary-500 text-primary-500 bg-transparent;
     &:hover {
       @apply border-primary-300 text-primary-300 bg-primary-100;
     }
-
     &:active {
       @apply border-primary-400 text-primary-400 bg-primary-100;
     }
-
     &:disabled {
       @apply border-primary-100 text-primary-100 bg-primary-100;
     }
@@ -86,7 +74,6 @@
 
   .btn-secondary {
     @apply bg-secondary-500 text-secondary-900;
-
     &:hover {
       @apply bg-secondary-700;
     }
@@ -98,10 +85,8 @@
     }
   }
 
-  /* (4) Accent - 實心粉色 */
   .btn-accent {
     @apply bg-accent-500 text-accent-900;
-
     &:hover {
       @apply bg-accent-700;
     }
@@ -113,10 +98,8 @@
     }
   }
 
-  /* (5) Bullet-Outline */
-
   .btn-bullet-outline {
-    @apply border-primary-500 text-primary-500 bg-white;
+    @apply border border-primary-500 text-primary-500 bg-white;
     &:hover {
       @apply bg-primary-100;
     }
@@ -128,11 +111,10 @@
     }
   }
 
-  /* (6) Bullet - 實心橘  */
   .btn-bullet {
     @apply bg-primary-500 text-primary-100;
     &:hover {
-      @apply bg-primary-600  text-primary-100;
+      @apply bg-primary-600;
     }
     &:active {
       @apply bg-primary-700;
@@ -142,20 +124,40 @@
     }
   }
 
-  /* (7) Netural - 實心深灰 */
   .btn-neutral {
     @apply bg-neutral-700 text-neutral-100;
-
     &:hover {
       @apply bg-neutral-500;
     }
-
     &:active {
       @apply bg-neutral-900;
     }
-
     &:disabled {
       @apply bg-neutral-200 text-neutral-300;
     }
+  }
+}
+
+/* --- 4. 響應式尺寸切換 (只放變數覆蓋) --- */
+@media (min-width: 1024px) {
+  .lg\:btn-lg {
+    --btn-fs: clamp(16px, 1.8vw, 18px);
+    --btn-py: 20px;
+    --btn-px: 32px;
+    --btn-mw: 120px;
+  }
+
+  .lg\:btn-md {
+    --btn-fs: 16px;
+    --btn-py: 16px;
+    --btn-px: 24px;
+    --btn-mw: 80px;
+  }
+
+  .lg\:btn-sm {
+    --btn-fs: 14px;
+    --btn-py: 8px;
+    --btn-px: 16px;
+    --btn-mw: 64px;
   }
 }
