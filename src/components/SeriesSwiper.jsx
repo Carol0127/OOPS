@@ -1,9 +1,14 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 
 import { getFrontendCategoriesService } from "../services/frontend";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 function SerieSwiper() {
   const [categories, setCategories] = useState([]);
@@ -24,9 +29,33 @@ function SerieSwiper() {
     fetchCategorise();
   }, []);
 
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      // 這裡搬入你原本在 Home.jsx 的動畫邏輯
+      gsap.from(sectionRef.current, {
+        y: 80,
+        opacity: 0,
+        duration: 1.2,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 85%", // 當區塊頂部到達視窗 85% 位置時觸發
+          toggleActions: "play none none none",
+        },
+      });
+    }, sectionRef);
+
+    return () => ctx.revert(); // 組件卸載時清理動畫
+  }, []);
+
   return (
     <>
-      <div className="max-w-324 mx-auto lg:px-4">
+      <div
+        ref={sectionRef}
+        className="max-w-324 mx-auto lg:px-4"
+      >
         <div className="lg:flex justify-between mb-10">
           <h2 className="text-display-02 text-neutral-700 mb-4 lg:mb-0">Dimensions</h2>
           <div className="flex gap-5 overflow-scroll lg:overflow-hidden">

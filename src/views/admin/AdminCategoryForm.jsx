@@ -1,29 +1,47 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-// 確保 Service 導入路徑正確
-import { addCategoryService, updateCategoryService, getCategoryService } from "../../services/admin";
+
+import {
+  addCategoryService,
+  updateCategoryService,
+  getCategoryService,
+  uploadImageService,
+} from "../../services/admin";
+
+import toast from "react-hot-toast";
 
 function AdminCategoryForm({ mode }) {
   const { id } = useParams();
   const navigate = useNavigate();
   const [isProcessing, setIsProcessing] = useState(false);
 
+  // 儲存實際的檔案物件 (上傳用)
+  const [bgFile, setBgFile] = useState(null);
+  const [mainFile, setMainFile] = useState(null);
+
+  // 儲存預覽網址 (顯示用)
+  const [bgPreview, setBgPreview] = useState("");
+  const [mainPreview, setMainPreview] = useState("");
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
     reset,
+    formState: { errors },
   } = useForm({
     defaultValues: {
       zhName: "",
       enName: "",
       description: "",
-      backgroundText: "", // 參考圖片新增背景敘述
+      subTitle: "", // 補上副標題
+      backgroundText: "",
+      bgImg: "", // 存放圖片網址
+      imgUrl: "", // 存放圖片網址
     },
   });
 
-  // 1. 編輯模式：抓取舊資料
+  // 1. 編輯模式：抓取資料並設定預覽圖
   useEffect(() => {
     if (mode === "edit" && id) {
       const fetchCategory = async () => {
@@ -32,8 +50,10 @@ function AdminCategoryForm({ mode }) {
           const data = await getCategoryService(id);
           if (data) {
             reset(data);
+            if (data.bgImg) setBgPreview(data.bgImg);
+            if (data.imgUrl) setMainPreview(data.imgUrl);
           } else {
-            alert("找不到該分類");
+            toast.error("找不到該分類");
             navigate("/admin/category");
           }
         } catch (error) {
@@ -50,17 +70,32 @@ function AdminCategoryForm({ mode }) {
   const onSubmit = async (data) => {
     try {
       setIsProcessing(true);
+
+      // 複製一份資料，準備填入圖片網址
+      let finalData = { ...data };
+
+      // 如果有選擇新的背景圖，先執行上傳
+      if (bgFile) {
+        const uploadedBgUrl = await uploadImageService(bgFile);
+        finalData.bgImg = uploadedBgUrl;
+      }
+
+      // 如果有選擇新的主圖，先執行上傳
+      if (mainFile) {
+        const uploadedMainUrl = await uploadImageService(mainFile);
+        finalData.imgUrl = uploadedMainUrl;
+      }
+
       if (mode === "new") {
-        await addCategoryService(data);
-        alert("新增分類成功！");
+        await addCategoryService(finalData);
+        toast.success("新增分類成功！");
       } else {
-        await updateCategoryService(id, data);
-        alert("更新分類成功！");
+        await updateCategoryService(id, finalData);
+        toast.success("更新分類成功！");
       }
       navigate("/admin/category");
-    } catch (error) {
-      console.error(error);
-      alert("操作失敗，請檢查權限");
+    } catch {
+      toast.error("操作失敗，請檢查權限或網路");
     } finally {
       setIsProcessing(false);
     }
@@ -134,8 +169,23 @@ function AdminCategoryForm({ mode }) {
               />
               {errors.enName && <p className="admin-error-msg">{errors.enName.message}</p>}
             </div>
-
-            {/* 分類描述 (佔滿整行) */}
+            {/* 副標題 (subTitle) */}
+            <div className="flex flex-col md:col-span-2">
+              <label
+                htmlFor="subTitle"
+                className="admin-label"
+              >
+                副標題
+              </label>
+              <input
+                id="subTitle"
+                type="text"
+                {...register("subTitle")}
+                placeholder="例如：「當寂靜被打破，生命才開始有了心跳。」"
+                className="admin-input"
+              />
+            </div>
+            {/* 分類描述  */}
             <div className="flex flex-col">
               <label
                 htmlFor="description"
@@ -152,7 +202,7 @@ function AdminCategoryForm({ mode }) {
               />
             </div>
 
-            {/* 背景敘述 (佔滿整行, 參考圖片) */}
+            {/* 背景敘述  */}
             <div className="flex flex-col">
               <label
                 htmlFor="backgroundText"
@@ -167,6 +217,54 @@ function AdminCategoryForm({ mode }) {
                 placeholder="輸入該分類頁面底部的故事背景文字"
                 className="admin-input"
               />
+            </div>
+
+            {/* === 背景圖片上傳 === */}
+            <div className="flex flex-col">
+              <label className="admin-label">背景圖片</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    setBgFile(file);
+                    setBgPreview(URL.createObjectURL(file));
+                  }
+                }}
+                className="admin-input"
+              />
+              {bgPreview && (
+                <img
+                  src={bgPreview}
+                  alt="背景預覽"
+                  className="mt-2 h-50 object-cover rounded-lg border"
+                />
+              )}
+            </div>
+
+            {/* === 系列圖片上傳 === */}
+            <div className="flex flex-col">
+              <label className="admin-label">系列主圖</label>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files[0];
+                  if (file) {
+                    setMainFile(file);
+                    setMainPreview(URL.createObjectURL(file));
+                  }
+                }}
+                className="admin-input"
+              />
+              {mainPreview && (
+                <img
+                  src={mainPreview}
+                  alt="主圖預覽"
+                  className="mt-2 h-50 object-cover rounded-lg border"
+                />
+              )}
             </div>
           </div>
         </div>

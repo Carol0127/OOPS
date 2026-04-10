@@ -4,7 +4,7 @@ import Countdown from "./Countdown";
 
 import gsap from "gsap";
 
-function Activities({ isRounded = false, spacing = "py-30" }) {
+function Activities({ isHero = false, isRounded = false, spacing = "py-30" }) {
   const [activities, setActivties] = useState([]);
   useEffect(() => {
     const fetchActivities = async () => {
@@ -58,6 +58,7 @@ function Activities({ isRounded = false, spacing = "py-30" }) {
           <div
             key={item.id}
             className={`activity-item bg-cover bg-center bg-no-repeat w-full overflow-hidden 
+              ${isHero ? "lg:h-[85vh]" : ""}
             ${isRounded ? "lg:rounded-[100px]" : ""} 
             ${spacing === "py-14" ? "py-20 lg:py-14" : "py-20 lg:py-30"}`}
             style={{ backgroundImage: `url(${item.imgFront})`, perspective: "1000px" }}

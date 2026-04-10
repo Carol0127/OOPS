@@ -2,15 +2,12 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { addContactService } from "../services/admin";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { useEffect, useRef } from "react";
 
 function ContactForm() {
   const containerRef = useRef(null);
   useEffect(() => {
     let ctx = gsap.context(() => {
-      // 3. 抓取所有要「一塊塊」出現的元素
-      // 包含左邊的大表單 (.form-block) 和右邊的四個小方塊 (.info-item)
       const blocks = gsap.utils.toArray(".anim-block");
 
       gsap.from(blocks, {
@@ -53,7 +50,7 @@ function ContactForm() {
       toast.success("訊息已成功送出！");
       reset(); // 成功後直接清空
     } catch (error) {
-      console.error(error);
+      console.error("Firebase Error:", error);
       toast.error("送出失敗，請稍後再試");
     }
   };

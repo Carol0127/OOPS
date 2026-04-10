@@ -87,7 +87,7 @@ function FeaturePhoto() {
               <div
                 className={`rounded-[2.5rem] border-2 transition-all duration-500 overflow-hidden ${item.color} aspect-3/4 ${item.size} group-hover:-translate-y-2`}
               >
-                <NavLink to="/about">
+                <NavLink to="/toys/#Toys">
                   <img
                     src={item[item.view]}
                     alt={item.zhName || "Product"}

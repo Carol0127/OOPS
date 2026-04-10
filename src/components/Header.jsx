@@ -14,7 +14,7 @@ function Header() {
           >
             <img
               className="w-25 lg:w-32.5 h-auto"
-              src="/OOPS-LOGO.png"
+              src="OOPS-LOGO.png"
               alt="OOPS LOGO"
             />
           </NavLink>

@@ -6,14 +6,28 @@ import { db, storage } from "./firebase";
  * 前台：取得所有已上架產品
  */
 export const getFrontendProductsService = async () => {
-  const q = query(collection(db, "products"), where("status", "==", true), orderBy("createdAt", "desc"));
+  try {
+    const q = query(
+      collection(db, "products"),
+      where("status", "==", true),
+      orderBy("createdAt", "asc"), // desc 是降序（新的在前），asc 是升序（舊的在前）
+    );
 
-  const querySnapshot = await getDocs(q);
+    const querySnapshot = await getDocs(q);
 
-  return querySnapshot.docs.map((doc) => ({
-    id: doc.id,
-    ...doc.data(),
-  }));
+    return querySnapshot.docs.map((doc) => {
+      const data = doc.data();
+      return {
+        id: doc.id,
+        ...data,
+        // 如果你需要把 Firestore Timestamp 轉成 JS Date 物件
+        createdAt: data.createdAt?.toDate ? data.createdAt.toDate() : data.createdAt,
+      };
+    });
+  } catch (error) {
+    console.error("Firestore 查詢錯誤:", error);
+    throw error;
+  }
 };
 
 /**
