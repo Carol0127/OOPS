@@ -27,10 +27,7 @@ function Home() {
       <section className="bg-neutral-200 py-20 lg:py-30 ps-4 lg:px-0">
         <SerieSwiper />
       </section>
-      <section
-        className="w-full py-14 lg:py-30"
-        id="contact"
-      >
+      <section className="w-full py-14 lg:py-30">
         <div className="hero-section py-14 rounded-4xl lg:mx-10 lg:rounded-[100px]">
           <ContactForm />
         </div>

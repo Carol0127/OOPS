@@ -162,12 +162,11 @@ function Toys() {
               {/* 2. 用一個 div 包裹 NavLink 執行動畫 */}
               <div className="faq-left-animate">
                 <NavLink
-                  smooth
                   to={{ pathname: "/", hash: "#contact" }}
-                  className="flex justify-between items-center rounded-4xl p-7 lg:p-10 bg-primary-500 text-display-04 text-primary-100 hover:bg-primary-900 transition-all shadow-xl w-full"
+                  className="flex justify-between items-center rounded-4xl p-7 lg:p-10 bg-primary-500 text-display-04 text-primary-100 hover:scale-105 transition-all duration-300"
                 >
                   Contact Us
-                  <span className="material-symbols-rounded align-bottom text-6xl! text-primary-100">
+                  <span className="material-symbols-rounded align-bottom text-6xl! text-success-100">
                     arrow_forward
                   </span>
                 </NavLink>

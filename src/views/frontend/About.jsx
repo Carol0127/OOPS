@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { NavLink } from "react-router-dom";
+import { HashLink as NavLink } from "react-router-hash-link";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -160,10 +160,9 @@ function About() {
               </div>
             ))}
 
-            {/* 按鈕現在也使用 .stat-card 類名，加入排隊動畫 */}
             <div className="lg:col-span-12 stat-card">
               <NavLink
-                to="/#/contact"
+                to={{ pathname: "/", hash: "#contact" }}
                 className="flex justify-between items-center rounded-4xl p-7 lg:p-10 bg-success-700 text-display-04 text-success-100 hover:scale-105 transition-all duration-300"
               >
                 Contact Us

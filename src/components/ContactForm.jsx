@@ -98,7 +98,8 @@ function ContactForm() {
     <>
       <div
         ref={containerRef}
-        className="max-w-324 mx-auto px-4 lg:px-0"
+        className="max-w-324 mx-auto px-4 lg:px-0 "
+        id="contact"
       >
         <h2 className="text-display-03 text-primary-500 mb-10">Let's make some OOPS!</h2>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
