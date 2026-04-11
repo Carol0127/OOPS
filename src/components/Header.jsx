@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { NavLink } from "react-router-dom";
+
+import { HashLink as NavLink } from "react-router-hash-link";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,7 +48,7 @@ function Header() {
             <li>
               <NavLink
                 className="text-accent-500 hover:text-accent-700 text-heading-04 me-10"
-                to="#contact"
+                to={{ pathname: "/", hash: "#contact" }}
               >
                 Contact
               </NavLink>

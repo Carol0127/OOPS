@@ -53,7 +53,7 @@ function Footer() {
           >
             <img
               className="w-40 lg:w-62.5 h-auto mb-7"
-              src="/OOPS-LOGO.png"
+              src="OOPS-LOGO.png"
               alt="OOPS LOGO"
             />
           </NavLink>

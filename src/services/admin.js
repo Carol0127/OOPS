@@ -56,9 +56,22 @@ export const adminLogoutService = async () => {
  */
 export const uploadImageService = async (file) => {
   if (!file) return null;
-  // 建立唯一的檔案名稱：products/時間戳記-檔名
+
+  // 1. 建立唯一的檔案名稱
   const storageRef = ref(storage, `products/${Date.now()}-${file.name}`);
-  const snapshot = await uploadBytes(storageRef, file);
+
+  // 2. 設定 Metadata，加上 Cache-Control
+  // public: 所有人都能快取
+  // max-age: 快取秒數 (31536000 秒 = 1 年)
+  const metadata = {
+    cacheControl: "public, max-age=31536000",
+    contentType: file.type, // 自動偵測圖片類型 (image/jpeg, image/png 等)
+  };
+
+  // 3. 上傳時傳入 metadata
+  const snapshot = await uploadBytes(storageRef, file, metadata);
+
+  // 4. 回傳網址
   return await getDownloadURL(snapshot.ref);
 };
 

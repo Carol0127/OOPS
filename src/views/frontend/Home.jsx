@@ -9,25 +9,6 @@ import Activities from "../../components/Activities";
 import AboutSection from "../../components/AboutSection";
 
 function Home() {
-  // useEffect(() => {
-  //   // 監聽圖片與資源全部載入完成
-  //   const handleLoad = () => {
-  //     ScrollTrigger.refresh();
-  //   };
-
-  //   window.addEventListener("load", handleLoad);
-
-  //   // 如果是單頁應用切換，有時候需要手動補一個延遲刷新
-  //   const timer = setTimeout(() => {
-  //     ScrollTrigger.refresh();
-  //   }, 1000);
-
-  //   return () => {
-  //     window.removeEventListener("load", handleLoad);
-  //     clearTimeout(timer);
-  //   };
-  // }, []);
-
   return (
     <>
       <section className="w-full lg:p-10 lg:mt-20 lg:mb-5">

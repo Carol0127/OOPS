@@ -21,7 +21,7 @@ if (typeof window !== "undefined") {
     self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
   }
   initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider("你的SiteKey"),
+    provider: new ReCaptchaV3Provider("6Lchp7AsAAAAABvSiYPtYt6QFujMIdFL4SIPpaCo"),
     isTokenAutoRefreshEnabled: true,
   });
 }

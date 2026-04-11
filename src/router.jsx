@@ -1,6 +1,5 @@
 import { createHashRouter } from "react-router-dom";
 
-import FrontendLayout from "./layout/FrontendLayOut";
 import Home from "./views/frontend/Home";
 import About from "./views/frontend/About";
 import Toys from "./views/frontend/Toys";
@@ -15,6 +14,7 @@ import AdminCategoryForm from "./views/admin/AdminCategoryForm";
 import AdminActivity from "./views/admin/AdminActivity";
 import AdminActivityForm from "./views/admin/AdminActivityForm";
 import AdminContactForm from "./views/admin/AdminContactForm";
+import FrontendLayout from "./layout/FrontendLayout";
 
 const router = createHashRouter([
   {
