@@ -130,7 +130,7 @@ function AdminContactForm() {
                 >
                   <p className="body-m text-neutral-500 mb-5">{formatTime(item.createdAt)}</p>
 
-                  <div className="flex  flex-col justify-between items-start mb-5 gap-2 lg:gap-4">
+                  <div className="flex flex-col lg:flex-row justify-between items-start mb-5 gap-2 lg:gap-4">
                     <h3 className="text-primary-900 text-heading-04">{item.title || "無主旨"}</h3>
                     <StatusBadge
                       variant={getBadgeVariant(item.status)}

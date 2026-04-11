@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { adminLoginService, subscribeToAuthChanges } from "../../services/admin";
@@ -8,6 +7,8 @@ import toast from "react-hot-toast";
 function AdminLogin() {
   const navigate = useNavigate();
   const [firebaseError, setFirebaseError] = useState("");
+  // 👁️ 新增狀態：是否顯示密碼
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -15,12 +16,9 @@ function AdminLogin() {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  //  自動檢查登入狀態
   useEffect(() => {
     const unsubscribe = subscribeToAuthChanges((user) => {
-      if (user) {
-        navigate("/admin");
-      }
+      if (user) navigate("/admin");
     });
     return () => unsubscribe();
   }, [navigate]);
@@ -54,7 +52,7 @@ function AdminLogin() {
           onSubmit={handleSubmit(onSubmit)}
           className="flex flex-col gap-7"
         >
-          {/* 信箱 */}
+          {/* 信箱區塊保持不變... */}
           <div>
             <label className="block text-body-m text-primary-500 mb-1">管理員信箱</label>
             <input
@@ -69,18 +67,34 @@ function AdminLogin() {
             {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
 
-          {/* 密碼 */}
+          {/* 密碼區塊 - 加入眼睛按鈕 */}
           <div className="mb-10">
             <label className="block text-body-m text-primary-500 mb-1">登入密碼</label>
-            <input
-              type="password"
-              autoComplete="current-password"
-              placeholder="請輸入密碼"
-              className={`w-full border-b px-1 py-2 outline-none transition-colors ${
-                errors.password ? "border-red-500" : "border-neutral-300 focus:border-primary-500"
-              }`} // 修正處：這裡之前誤寫成 errors.email
-              {...register("password", { required: "請輸入密碼", minLength: { value: 6, message: "最少 6 碼" } })}
-            />
+            <div className="relative">
+              <input
+                // 👁️ 根據狀態切換 type
+                type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                placeholder="請輸入密碼"
+                className={`w-full border-b px-1 py-2 pr-10 outline-none transition-colors ${
+                  errors.password ? "border-red-500" : "border-neutral-300 focus:border-primary-500"
+                }`}
+                {...register("password", {
+                  required: "請輸入密碼",
+                  minLength: { value: 6, message: "最少 6 碼" },
+                })}
+              />
+              {/* 眼睛按鈕 */}
+              <button
+                type="button" // 👈 重要：必須設為 button 否則會觸發 form submit
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-2 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-primary-500"
+              >
+                <span className="material-symbols-rounded align-middle">
+                  {showPassword ? "visibility" : "visibility_off"}
+                </span>
+              </button>
+            </div>
             {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
           </div>
 
