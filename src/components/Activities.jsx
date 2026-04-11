@@ -115,7 +115,7 @@ function Activities({ isHero = false, isRounded = false, spacing = "py-30" }) {
           onMouseMove={(e) => handleTilt(e, e.currentTarget.querySelector(".activity-item-inner"))}
           onMouseLeave={(e) => handleReset(e.currentTarget.querySelector(".activity-item-inner"))}
         >
-          <div className="max-w-324 mx-auto p-4">
+          <div className="max-w-324 mx-auto">
             <div
               className="activity-item-inner grid grid-cols-1 md:grid-cols-12 gap-0 w-full rounded-4xl overflow-hidden shadow-2xl origin-center"
               style={{ transformStyle: "preserve-3d" }}
