@@ -24,7 +24,7 @@ export default function Pagination({ currentPage, hasMore, onPageChange, isLoadi
             key={p}
             onClick={() => onPageChange(p)}
             disabled={isLoading}
-            className={`px-4 py-2 font-bold transition-colors border-r last:border-r-0 border-neutral-300 ${
+            className={`px-4 py-2 font-bold transition-colors last:border-r-0 border-neutral-300 ${
               currentPage === p
                 ? "bg-primary-500 text-white" // 選中樣式 (橘色)
                 : "text-primary-500 hover:bg-neutral-100" // 未選中樣式

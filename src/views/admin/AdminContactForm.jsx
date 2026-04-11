@@ -5,7 +5,7 @@ import Pagination from "../../components/Admin/Pagination";
 import { deleteContactService, updateContactStatusService } from "../../services/admin";
 
 import toast from "react-hot-toast";
-import { showConfirmToast } from "../../components/Admin/toastHelper";
+import { showConfirmToast } from "../../components/Admin/ToastHelper";
 
 function AdminContactForm() {
   // ✨ 使用 Hook 取代原本的 useState 與 useEffect
@@ -130,7 +130,7 @@ function AdminContactForm() {
                 >
                   <p className="body-m text-neutral-500 mb-5">{formatTime(item.createdAt)}</p>
 
-                  <div className="flex justify-between items-start mb-5 gap-4">
+                  <div className="flex  flex-col justify-between items-start mb-5 gap-2 lg:gap-4">
                     <h3 className="text-primary-900 text-heading-04">{item.title || "無主旨"}</h3>
                     <StatusBadge
                       variant={getBadgeVariant(item.status)}
@@ -142,29 +142,29 @@ function AdminContactForm() {
                     來自: {item.name || "匿名"} ({item.email})
                   </p>
 
-                  <div className="bg-neutral-200 px-4 py-3 rounded-xl mb-5">
+                  <div className="bg-neutral-200 px-4 py-3 rounded-xl mb-5 max-h-35 lg:max-h-37.5 overflow-y-auto">
                     <p className="text-body-m text-neutral-900 whitespace-pre-line">{item.message || "無內容"}</p>
                   </div>
 
-                  <div className="flex  mt-auto">
+                  <div className="flex flex-col lg:flex-row mt-auto ">
                     <button
                       type="button"
-                      className="btn btn-md btn-accent me-auto"
+                      className="btn lg:btn-md btn-sm btn-accent lg:me-auto mb-2 lg:mb-0"
                       onClick={() => handleDelete(item.id, item.name)}
                     >
                       刪除
                     </button>
-                    <div className="flex  gap-2">
+                    <div className="flex flex-col lg:flex-row justify-center gap-2">
                       <button
                         type="button"
-                        className="btn btn-neutral btn-md"
+                        className="btn btn-neutral lg:btn-md btn-sm"
                         onClick={() => handleStatusToggle(item.id, item.status || "未回覆")}
                       >
                         切換處理狀態
                       </button>
                       <a
                         href={`mailto:${item.email}?subject=回覆：${item.title || "OOPS 客服中心"}`}
-                        className="btn btn-primary btn-md inline-flex items-center justify-center"
+                        className="btn btn-primary lg:btn-md btn-sm inline-flex items-center justify-center"
                       >
                         開啟信箱回覆
                       </a>

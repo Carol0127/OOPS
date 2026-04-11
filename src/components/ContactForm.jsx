@@ -40,21 +40,32 @@ function ContactForm() {
       email: "",
       title: "",
       message: "",
+      honeypot: "",
     },
   });
 
   // 3. 簡化後的送出邏輯
   const onSubmit = async (data) => {
+    // 🍯 蜜罐檢查：如果機器人填了隱藏欄位
+    if (data.honeypot) {
+      console.warn("Detected bot activity.");
+      toast.success("訊息已成功送出！"); // 給機器人假的回饋
+      reset();
+      return;
+    }
+
     try {
-      await addContactService(data);
+      // 這裡我們只把真正的資料送給 Firebase，過濾掉 honeypot 欄位
+      const { honeypot: _honeypot, ...submitData } = data;
+      await addContactService(submitData);
+
       toast.success("訊息已成功送出！");
-      reset(); // 成功後直接清空
+      reset();
     } catch (error) {
       console.error("Firebase Error:", error);
       toast.error("送出失敗，請稍後再試");
     }
   };
-
   const contactData = [
     {
       subTitle: "Bussiness / Collab",
@@ -110,6 +121,14 @@ function ContactForm() {
             </div>
 
             <form onSubmit={handleSubmit(onSubmit)}>
+              <div style={{ opacity: 0, position: "absolute", top: 0, left: 0, height: 0, width: 0, zIndex: -1 }}>
+                <input
+                  {...register("honeypot")}
+                  type="text"
+                  tabIndex="-1"
+                  autoComplete="off"
+                />
+              </div>
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 ">
                 {/* 姓名 */}
                 <div className="col-span-1 lg:col-span-6">

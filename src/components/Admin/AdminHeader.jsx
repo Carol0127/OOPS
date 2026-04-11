@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { adminLogoutService } from "../../services/admin";
 import toast from "react-hot-toast";
-import { showConfirmToast } from "./toastHelper";
+import { showConfirmToast } from "./ToastHelper";
 
 function AdminHeader() {
   const navLinks = [
@@ -13,6 +13,21 @@ function AdminHeader() {
   ];
 
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    if (isOpen) {
+      // 開啟時，禁止滑動
+      document.body.style.overflow = "hidden";
+    } else {
+      // 關閉時，恢復滑動
+      document.body.style.overflow = "unset";
+    }
+
+    // 組件卸載時的清理動作，避免影響其他頁面
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
+
   const navigate = useNavigate();
 
   const executeLogout = async () => {

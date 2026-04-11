@@ -5,12 +5,12 @@ import { getStorage } from "firebase/storage";
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
 
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID,
+  apiKey: "AIzaSyBkCdZDVDrsCb97mLkgnNiAV06h0DIUtgU",
+  authDomain: "gen-lang-client-0048987349.firebaseapp.com",
+  projectId: "gen-lang-client-0048987349",
+  storageBucket: "gen-lang-client-0048987349.firebasestorage.app",
+  messagingSenderId: "1095483097662",
+  appId: "1:1095483097662:web:d04098b0cab5a24b2a876f",
 };
 
 const app = initializeApp(firebaseConfig);
