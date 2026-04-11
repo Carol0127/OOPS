@@ -1,16 +1,105 @@
-# React + Vite
+# 📦 OOPS - 現代化品牌官網與後台管理系統
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 📋 專案簡介
 
-Currently, two official plugins are available:
+OOPS 是一個整合 React 19 與 Firebase 的全棧實踐專案。本專案的重點不僅在於技術堆疊，更在於開發過程中如何透過**全鏈路設計思考**與**策略性 AI 協作**，將創意願景轉化為完整的系統解決方案。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+---
 
-## React Compiler
+## 🎯 核心功能
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 👥 前台用戶體驗
 
-## Expanding the ESLint configuration
+- ✨ **動態導航與視覺**：使用 GSAP 實作平滑滾動與視差效果
+- 🔍 **即時產品展示**：從 Firestore 讀取資料，支援多分類動態篩選
+- 📱 **響應式設計 (RWD)**：從手機到桌機提供一致的流暢體驗
+- 📩 **聯絡表單系統**：串接資料庫實時紀錄用戶諮詢
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### ⚙️ 後台管理系統
+
+- 🔒 **身份驗證**：Firebase Auth 實作管理員登入與路由保護
+- 📝 **實時 CRUD**：產品與活動資訊的新增、修改、刪除、上下架管理
+- ☁️ **雲端媒體管理**：自動上傳圖片至 Firebase Storage 並自動優化快取
+
+---
+
+## 🧠 學習者的思考與挑戰
+
+### 🎨 1. 全鏈路規劃：在創意與實作間拉扯
+
+本專案的 UI/UX 設計稿由我自主規劃。
+
+**初衷與掙扎**：在規劃視覺時，我曾焦慮地思考「這我真的做得到嗎？」。但我決定不讓技術限制扼殺想像，而是先設定目標再尋找解法。這讓我學會如何從「產品需求」反向推導所需的「技術路徑」。
+
+### 🤖 2. 跨越技術鴻溝：與 AI 的協作策略
+
+面對陌生的 GSAP 與 Firebase，我將 AI 定位為「資深助教」：
+
+- **精準提問**：我練習將腦中的想像轉化為 AI 能理解的邏輯，並學會驗證輸出
+- **驗證與內化**：我不只是複製，而是要求 AI 解釋 cleanup 機制，確保動畫效能與代碼品質
+
+### 🏗️ 3. 架構思維：即使是新手也要做對的事
+
+**Service Layer**：在 AI 建議下，我將 API 邏輯封裝在 `services/`。這種「關注點分離」的做法，極大提升了專案後期的可維護性。
+
+---
+
+## 🚀 實戰中的問題解決
+
+### 🚩 Firebase 的實時同步與狀態衝突
+
+**挑戰描述**：後台刪除產品時，前台列表偶爾出現閃退
+
+**思考**：這源於 Firestore 監聽與 React 組件狀態的不同步
+
+**解決**：理解了 `onSnapshot` 的清理時機，並在 `useEffect` 中正確解除監聽。這是我對「異步編程」理解最深的成長。
+
+---
+
+## 🛠️ 技術棧與工具
+
+| 類別        | 使用技術 / 工具                                |
+| ----------- | ---------------------------------------------- |
+| 🎨 設計規劃 | Figma / UI & UX Planning                       |
+| ⚛️ 前端框架 | React 19, Vite, React Router 7                 |
+| 🔥 後端服務 | Firebase (Auth, Firestore, Storage, App Check) |
+| 🎭 視覺動效 | Tailwind CSS 4, GSAP, Swiper 12                |
+| 🤖 開發協作 | Claude / ChatGPT (架構建議與除錯)              |
+
+---
+
+## 📂 專案目錄結構
+
+```
+src/
+├── services/           # 資料處理邏輯：學習如何封裝 API
+│   ├── admin.js        # 管理端資料操作
+│   └── frontend.js     # 前台展示資料邏輯
+├── views/              # 頁面視圖 (Frontend / Admin 分離)
+├── components/         # 可重用 UI 組件
+├── hooks/              # 複雜邏輯抽象化練習
+└── assets/             # 全局樣式系統
+```
+
+---
+
+## ⚙️ 環境配置與開發指令
+
+### 1. 環境變數配置
+
+建立 `.env.local` 並填入您的 Firebase 設定。
+
+### 2. 常用指令
+
+```bash
+npm install     # 安裝環境
+npm run dev     # 開發模式
+npm run build   # 生產構建
+```
+
+---
+
+## 📅 最後更新
+
+2026 年 4 月 11 日
+© 2026 OOPS. All Rights Reserved.

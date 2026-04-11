@@ -21,7 +21,7 @@ function Footer() {
     {
       title: "Legal",
       links: [
-        { name: "Policy", path: "/" },
+        { name: "Policy", path: "/policy" },
         { name: "Q&A", path: "/toys" },
       ],
     },

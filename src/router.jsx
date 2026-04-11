@@ -15,6 +15,8 @@ import AdminActivity from "./views/admin/AdminActivity";
 import AdminActivityForm from "./views/admin/AdminActivityForm";
 import AdminContactForm from "./views/admin/AdminContactForm";
 import FrontendLayout from "./layout/FrontendLayout";
+import NotFound from "./views/frontend/NotFound";
+import Policy from "./views/frontend/Policy";
 
 const router = createHashRouter([
   {
@@ -24,6 +26,8 @@ const router = createHashRouter([
       { index: true, element: <Home /> },
       { path: "about", element: <About /> },
       { path: "toys", element: <Toys /> },
+      { path: "policy", element: <Policy /> },
+      { path: "*", element: <NotFound /> },
     ],
   },
   {
