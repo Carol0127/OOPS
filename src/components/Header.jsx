@@ -1,14 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { HashLink as NavLink } from "react-router-hash-link";
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [isOpen]);
+
   return (
     <>
       <div className="md:mx-10 mx-4 bg-white/75 backdrop-blur-md rounded-full fixed top-5 left-0 right-0 z-50">
-        <div className="p-4 lg:p-8 flex">
+        <div className="p-4 lg:p-8 flex items-center">
           <NavLink
             className="me-auto shrink-0"
             to="/"
@@ -55,28 +66,26 @@ function Header() {
             </li>
             <li className="flex">
               <a href="#">
-                {/* 修正：class 改為 className */}
                 <i className="bi bi-facebook align-bottom text-accent-500 hover:text-accent-700 text-2xl me-4"></i>
               </a>
               <a href="#">
-                {/* 修正：class 改為 className */}
                 <i className="bi bi-instagram align-bottom text-accent-500 hover:text-accent-700 text-2xl"></i>
               </a>
             </li>
           </ul>
 
           <button
-            className="md:hidden text-accent-500 text-2xl"
+            className="md:hidden text-accent-500"
             onClick={() => setIsOpen(true)}
           >
-            <span className="material-symbols-rounded">menu</span>
+            <span className="material-symbols-rounded align-bottom">menu</span>
           </button>
         </div>
       </div>
 
       {/* --- 手機版 Offcanvas --- */}
       <div
-        className={`fixed top-0 right-0 h-screen w-full bg-white z-70 transform transition-all duration-300  ${
+        className={`fixed top-0 right-0 h-dvh w-full overflow-hidden bg-white z-70 transform transition-all duration-300  ${
           isOpen ? "translate-x-0 opacity-100 visible" : "translate-x-full opacity-0 invisible"
         }`}
       >

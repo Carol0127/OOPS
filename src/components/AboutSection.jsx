@@ -56,7 +56,7 @@ function AboutSection({ isHero = false }) {
         className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-6 items-center"
       >
         <div
-          className={`intro-text p-10 lg:col-span-5 flex flex-col gap-7 lg:gap-10 ${isHero ? "bg-white rounded-4xl" : ""}`}
+          className={`intro-text lg:p-10 lg:col-span-5 flex flex-col gap-7 lg:gap-10 ${isHero ? "bg-white rounded-4xl" : ""}`}
         >
           <h2 className="text-display-02 leading-tight">
             Life is full of <span className="text-primary-500">OOPS</span>,

@@ -102,13 +102,13 @@ function Activities({ isHero = false, isRounded = false, spacing = "py-30" }) {
   return (
     <div
       ref={containerRef}
-      className="activity-main-wrapper overflow-hidden h-screen lg:h-[85vh]"
+      className="activity-main-wrapper overflow-hidden min-h-dvh lg:h-[85vh]"
     >
       {activities.map((item) => (
         <div
           key={item.id}
           className={`activity-item bg-cover bg-center bg-no-repeat w-full 
-           ${isHero ? "h-screen lg:h-[85vh] " : ""}
+           ${isHero ? "min-h-dvh lg:h-[85vh] " : ""}
             ${isRounded ? "lg:rounded-[100px]" : ""} 
             ${spacing === "py-14" ? "py-20 lg:py-14" : "py-20 lg:py-30"}`}
           style={{ backgroundImage: `url(${item.imgFront})`, perspective: "1500px" }}

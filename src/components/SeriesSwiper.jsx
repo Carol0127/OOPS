@@ -104,8 +104,11 @@ function SerieSwiper() {
           {[...categories, ...categories].map((item, index) => {
             const realIndex = index % categories.length;
             return (
-              <SwiperSlide key={`${item.id}-${index}`}>
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-4xl overflow-hidden bg-white items-center">
+              <SwiperSlide
+                key={`${item.id}-${index}`}
+                className="h-auto! flex"
+              >
+                <div className="w-full h-full grid grid-cols-1 lg:grid-cols-12 gap-0 rounded-4xl overflow-hidden bg-white items-stretch">
                   <div className="lg:col-span-7 shrink-0">
                     <img
                       src={item.imgUrl}

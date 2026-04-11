@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { HashLink as NavLink } from "react-router-hash-link";
 
 function Footer() {
   const footerLinks = [
@@ -22,11 +22,13 @@ function Footer() {
       title: "Legal",
       links: [
         { name: "Policy", path: "/policy" },
-        { name: "Q&A", path: "/toys" },
+        { name: "Q&A", path: "/toys#QA" },
       ],
     },
   ];
+
   const renderLink = (link) => {
+    // 1. 處理外部網址
     if (link.path.startsWith("http")) {
       return (
         <a
@@ -38,9 +40,8 @@ function Footer() {
         </a>
       );
     }
-    if (link.path.includes("#")) {
-      return <a href={link.path}>{link.name}</a>;
-    }
+
+    // 2. 內部連結與錨點（什麼都不用加，單純給路徑就好）
     return <NavLink to={link.path}>{link.name}</NavLink>;
   };
   return (

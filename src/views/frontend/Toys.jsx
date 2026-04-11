@@ -138,6 +138,7 @@ function Toys() {
       <section
         ref={faqSectionRef}
         className="w-full lg:px-10 lg:py-20 py-14 overflow-hidden"
+        id="QA"
       >
         <div
           className="rounded-4xl lg:rounded-[100px] py-20 px-4 bg-cover bg-center bg-no-repeat"
